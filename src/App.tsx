@@ -11,8 +11,8 @@ export default function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((u) => {
-      setUser(u);
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+      setUser(currentUser);
       setLoading(false);
     });
     return () => unsubscribe();
@@ -21,7 +21,7 @@ export default function App() {
   if (loading) {
     return (
       <div style={{ display: 'flex', height: '100vh', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f8fafc', color: '#0284c7', fontWeight: 500 }}>
-        Cargando sistema médico...
+        Loading medical system...
       </div>
     );
   }
@@ -30,7 +30,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={user ? <Navigate to="/menu" /> : <Login />} />
-        <Route path="/menu" element={user ? <Dashboard /> : <Navigate to="/" state={{ error: true }} />} />
+        <Route path="/menu" element={user ? <Dashboard /> : <Navigate to="/" state={{ sessionClosed: true }} />} />
       </Routes>
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
     </BrowserRouter>
