@@ -1,9 +1,8 @@
 import { useEffect } from "react";
-import { signInWithPopup, signOut, fetchSignInMethodsForEmail, linkWithCredential, GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
+import { signInWithPopup, signOut, User } from "firebase/auth";
 import { auth, googleProvider, githubProvider } from "./firebaseConfig";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import { User } from "firebase/auth";
 
 interface LoginProps {
   user: User | null;
