@@ -5,9 +5,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { auth } from './firebaseConfig';
 import Login from './Login';
 import Dashboard from './Dashboard';
+import { User } from 'firebase/auth';
 
 export default function App() {
-  const [user, setUser] = useState(auth.currentUser);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,8 +30,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={user ? <Navigate to="/menu" /> : <Login />} />
-        <Route path="/menu" element={user ? <Dashboard /> : <Navigate to="/" state={{ sessionClosed: true }} />} />
+        <Route path="/" element={<Login user={user} />} />
+        <Route path="/menu" element={user ? <Dashboard user={user} /> : <Navigate to="/" state={{ sessionClosed: true }} />} />
       </Routes>
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
     </BrowserRouter>
